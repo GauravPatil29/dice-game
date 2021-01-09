@@ -1,0 +1,33 @@
+<div class="container py-5">
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4">Welcome</h1>
+            <p class="lead mb-0">Game: {{ gameCount }}/{{ totalCount }}, Score: {{ totalScore }} </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="bg-white rounded-lg shadow-sm p-5">
+
+                <div id="nav-tab-card" class="tab-pane fade show active">
+
+                    <div class="image-container">
+                        <img class="vertical-center" [src]="imageURL">
+                    </div>
+
+                    <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                        (click)="play()" [disabled]="gameCount >= totalCount">
+                        Random </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="msg-container" *ngIf="msgText">
+    <p class="alert alert-success">{{ msgText }}</p>
+</div>

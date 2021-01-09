@@ -1,0 +1,33 @@
+<div class="container py-5">
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-4">
+            <h1 class="display-4">Welcome</h1>
+        </div>
+    </div>
+
+    <div class="table-scrollable">
+        <table class="table table-hover table-sortable">
+            <thead>
+                <tr>
+                    <th data-sort-type="numeric">#</th>
+                    <th data-sort-type="text">Nick Name</th>
+                    <th data-sort-type="numeric">Score</th>
+                    <th data-sort-type="text">Time Taken</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of scores; index as index;">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ data.nickname }}</td>
+                    <td>{{ data.score }}</td>
+                    <td>{{ data.timeTaken }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm" (click)="exportToCSV()">
+        Export </button>
+
+</div>
