@@ -3,7 +3,7 @@
 
 name: Firebase Production Deployment
 
-'on':
+on:
   push:
     branches:
     - master
