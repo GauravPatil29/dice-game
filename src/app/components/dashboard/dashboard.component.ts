@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Score } from 'src/app/model/score';
 import { SharedService } from 'src/app/shared.service';
 
 @Component({
@@ -8,45 +9,14 @@ import { SharedService } from 'src/app/shared.service';
 })
 export class DashboardComponent implements OnInit {
 
-  public scores: Array<any> = [{
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }, {
-    nickname: "Adam",
-    score: 10,
-    timeTaken: 35420
-  }];
+  public scores: Array<Score> = [];
 
   constructor(
     private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
+    this.scores = this.sharedService.getAllScore();
   }
 
   exportToCSV(): void {

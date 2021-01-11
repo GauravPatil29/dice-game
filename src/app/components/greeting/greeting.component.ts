@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SharedService } from 'src/app/shared.service';
 
 @Component({
   selector: 'app-greeting',
@@ -6,12 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./greeting.component.scss']
 })
 export class GreetingComponent implements OnInit {
-  
-  public totalScore: number = 0;
 
-  constructor() { }
+  public score: number = 0;
+
+  constructor(
+    private sharedService: SharedService,
+    private router: Router
+  ) {
+    this.score = this.router.getCurrentNavigation()?.extras?.state?.score.score;
+  }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.sharedService.signOut();
+    }, 5000);
   }
 
 }

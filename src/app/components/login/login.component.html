@@ -13,24 +13,35 @@
 
                 <div id="nav-tab-card" class="tab-pane fade show active">
 
-                    <div class="msg-container">
-                        <p class="alert alert-success">Some text success or error</p>
-                    </div>
-
-                    <form role="form" (onSubmit)="login()">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" name="username" placeholder="David Smith" required class="form-control">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="form-group"
+                            [ngClass]="{'has-error': (autoValidate || loginForm.controls['username'].touched) && loginForm.controls['username'].errors && loginForm.controls['username'].errors.required, 'has-success': loginForm.controls['username'].valid}">
+                            <label for="username" class="control-label">Username</label>
+                            <input type="text" name="username" placeholder="David Smith" required class="form-control"
+                                formControlName="username">
+                            <span class="help-block"
+                                *ngIf="(autoValidate || loginForm.controls['username'].touched) && loginForm.controls['username'].errors && loginForm.controls['username'].errors.required">Please
+                                enter Username.</span>
                         </div>
 
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" placeholder="*******" required class="form-control">
+                        <div class="form-group"
+                            [ngClass]="{'has-error': (autoValidate || loginForm.controls['password'].touched) && loginForm.controls['password'].errors && loginForm.controls['password'].errors.required, 'has-success': loginForm.controls['password'].valid}">
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" name="password" placeholder="*******" required class="form-control"
+                                formControlName="password">
+                            <span class="help-block"
+                                *ngIf="(autoValidate || loginForm.controls['password'].touched) && loginForm.controls['password'].errors && loginForm.controls['password'].errors.required">Please
+                                enter password.</span>
                         </div>
 
-                        <div class="form-group">
-                            <label for="nickname">Nickname</label>
-                            <input type="text" name="nickname" placeholder="David" required class="form-control">
+                        <div class="form-group"
+                            [ngClass]="{'has-error': (autoValidate || loginForm.controls['nickname'].touched) && loginForm.controls['nickname'].errors && loginForm.controls['nickname'].errors.required, 'has-success': loginForm.controls['nickname'].valid}">
+                            <label for="nickname" class="control-label">Nickname</label>
+                            <input type="text" name="nickname" placeholder="David" required class="form-control"
+                                formControlName="nickname">
+                            <span class="help-block"
+                                *ngIf="(autoValidate || loginForm.controls['nickname'].touched) && loginForm.controls['nickname'].errors && loginForm.controls['nickname'].errors.required">Please
+                                enter nickname.</span>
                         </div>
 
                         <button type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">

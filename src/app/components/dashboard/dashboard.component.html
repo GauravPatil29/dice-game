@@ -21,7 +21,7 @@
                     <td>{{ index + 1 }}</td>
                     <td>{{ data.nickname }}</td>
                     <td>{{ data.score }}</td>
-                    <td>{{ data.timeTaken }}</td>
+                    <td>{{ data.time | date :'ss:SS' }}</td>
                 </tr>
             </tbody>
         </table>

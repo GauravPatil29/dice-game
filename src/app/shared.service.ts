@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatabaseService } from './database.service';
 import { Score } from './model/score';
 import { User } from './model/user';
@@ -11,7 +12,8 @@ export class SharedService {
   private currentUser !: User;
 
   constructor(
-    private dbService: DatabaseService
+    private dbService: DatabaseService,
+    private router: Router
   ) { }
 
   private convertToCSV(objArray: Array<object>, headerList: Array<string>): string {
@@ -62,11 +64,44 @@ export class SharedService {
     document.body.removeChild(dwldLink);
   }
 
+  public authenticateUser(user: User): AuthenticatorResponse {
+    let response = this.dbService.getUserDetails(user);
+    this.setCurrentUser(response.user);
+    if (response.status == 201) {
+      return new AuthenticatorResponse(201, response.user);
+    } else {
+      return new AuthenticatorResponse(200, response.user);
+    }
+  }
+
+  public setCurrentUser(user: any): void {
+    this.currentUser = user;
+  }
+
   public getCurrentUser(): User {
     return this.currentUser;
   }
 
+  public getAllScore(): Array<Score> {
+    return this.dbService.getScoreLists();
+  }
+
   public setScore(score: Score): void {
     this.dbService.setScore(score);
+  }
+
+  public signOut(): void {
+    this.setCurrentUser(null);
+    this.router.navigateByUrl('login');
+  }
+}
+
+class AuthenticatorResponse {
+  status: number;
+  user: User;
+
+  constructor(status: number, user: User) {
+    this.status = status;
+    this.user = user;
   }
 }

@@ -18,16 +18,11 @@
                     </div>
 
                     <button type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
-                        (click)="play()" [disabled]="gameCount >= totalCount">
+                        (click)="play()" [disabled]="disabled">
                         Random </button>
                 </div>
 
             </div>
         </div>
     </div>
-</div>
-
-
-<div class="msg-container" *ngIf="msgText">
-    <p class="alert alert-success">{{ msgText }}</p>
 </div>

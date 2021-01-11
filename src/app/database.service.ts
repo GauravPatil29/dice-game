@@ -29,6 +29,8 @@ export class DatabaseService {
 
     if (scores) {
       this.scores = JSON.parse(scores);
+    } else {
+      localStorage.setItem('scores', JSON.stringify(this.scores));
     }
   }
 
@@ -44,7 +46,7 @@ export class DatabaseService {
     }
   }
 
-  public getUserDetails(user: User): User {
+  public getUserDetails(user: User): GetUserResponse {
     let result = this.users.find((f: User) => {
       return (f.username == user.username) &&
         (f.nickname == user.nickname) &&
@@ -52,12 +54,12 @@ export class DatabaseService {
     });
 
     if (result) {
-      return result;
+      return new GetUserResponse(200, result);
     } else {
       user.role = "user";
       this.users.push(user);
       this.saveUsersToLocalStorage();
-      return user;
+      return new GetUserResponse(201, user);
     }
   }
 
@@ -70,4 +72,14 @@ export class DatabaseService {
     this.saveScoresToLocalStorage();
   }
 
+}
+
+class GetUserResponse {
+  status: number;
+  user: User;
+
+  constructor(status: number, user: User) {
+    this.status = status;
+    this.user = user;
+  }
 }
