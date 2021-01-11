@@ -1,27 +1,30 @@
-# Dice
+# Angular: dice-game
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+This sample shows how to create an angular app that:
+* How to create **Components**, **Module**, **Interface**, **Guard** in angular.
+* How to create **Providers** in angular and inject them into components
+* How to create and use **Feature Module** in angular.
+* How to use **Routing** in angular.
+* **Calls APIs**.
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* [URL - https://https://project-e96e4.web.app/](https://project-e96e4.web.app/)
 
-## Code scaffolding
+## Running it
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Clone this repository (https://github.com/GauravPatil29/dice-game) for this example.
 
-## Build
+run `npm install` on this project and run `ng serve` to start the app. Then just navigate to [http://localhost:4200](http://localhost:4200) :boom:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Issue Reporting
 
-## Running unit tests
+If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. You can write a mail to [Gaurav Patil](mailto:gauravpatil2994@gmail.com?subject=Issues)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Author
 
-## Running end-to-end tests
+[Gaurav Patil](https://github.com/GauravPatil29)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## License
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
