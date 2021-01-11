@@ -48,9 +48,11 @@ jobs:
         run: |
           npm run build:prod
 
+      - name: Checkout updated repo
+        uses: actions/checkout@v2
+
       - name: Firebase deploy
-      - uses: actions/checkout@v2
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROJECT_E96E4 }}'
