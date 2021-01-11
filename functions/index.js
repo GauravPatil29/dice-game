@@ -107,6 +107,6 @@ app.use((req, res, next) => {
     res.type('txt').send('Not found');
 });
 
-app.listen(4201);
+// app.listen(4201);
 
-// exports.api = functions.https.onRequest(app);
+exports.api = functions.https.onRequest(app);

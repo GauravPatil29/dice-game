@@ -9,7 +9,8 @@ import { User } from './model/user';
 })
 export class DatabaseService {
 
-  private API_URL: string = "http://localhost:4201";
+  // private API_URL: string = "http://localhost:4201";
+  private API_URL: string = "https://us-central1-project-e96e4.cloudfunctions.net/api";
 
   constructor(
     private http: HttpClient
