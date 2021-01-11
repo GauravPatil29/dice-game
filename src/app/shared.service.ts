@@ -40,9 +40,9 @@ export class SharedService {
     return str;
   }
 
-  public downloadCSVFile(data: Array<object>, filename = 'data'): void {
+  public downloadCSVFile(data: Array<Score>, filename = 'data'): void {
 
-    let csvData = this.convertToCSV(data, ['nickname', 'score', 'timeTaken']);
+    let csvData = this.convertToCSV(data, ['nickname', 'score', 'time']);
 
     console.log(csvData);
 
@@ -64,14 +64,22 @@ export class SharedService {
     document.body.removeChild(dwldLink);
   }
 
-  public authenticateUser(user: User): AuthenticatorResponse {
-    let response = this.dbService.getUserDetails(user);
-    this.setCurrentUser(response.user);
-    if (response.status == 201) {
-      return new AuthenticatorResponse(201, response.user);
-    } else {
-      return new AuthenticatorResponse(200, response.user);
-    }
+  public authenticateUser(user: User): Promise<AuthenticatorResponse> {
+    return new Promise<AuthenticatorResponse>((resolve, reject) => {
+
+      this.dbService.getUserDetails(user).then((response) => {
+
+        this.setCurrentUser(response.user);
+
+        if (response.status == 201) {
+          resolve(new AuthenticatorResponse(201, response.user));
+        } else {
+          resolve(new AuthenticatorResponse(200, response.user));
+        }
+
+      }).catch((error) => reject(error));
+
+    });
   }
 
   public setCurrentUser(user: any): void {
@@ -82,12 +90,22 @@ export class SharedService {
     return this.currentUser;
   }
 
-  public getAllScore(): Array<Score> {
-    return this.dbService.getScoreLists();
+  public getAllScore(): Promise<Array<Score>> {
+    return new Promise<Array<Score>>((resolve, reject) => {
+
+      this.dbService.getScoreLists().then((response) => {
+
+        resolve(response);
+
+      }).catch((error) => reject(error));
+
+    });
   }
 
-  public setScore(score: Score): void {
-    this.dbService.setScore(score);
+  public setScore(score: Score): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.dbService.setScore(score).then(() => resolve()).catch((error) => reject(error));
+    });
   }
 
   public signOut(): void {

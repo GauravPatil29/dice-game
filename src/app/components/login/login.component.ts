@@ -30,30 +30,33 @@ export class LoginComponent implements OnInit {
 
   }
 
-  public login(): void {
+  public async login(): Promise<void> {
     if (this.loginForm.valid) {
 
       let user = this.loginForm.value;
 
-      const response = this.sharedService.authenticateUser(user);
+      this.sharedService.authenticateUser(user).then((response) => {
+        if (response.user.role == "admin") {
+          this.autoValidate = false;
 
-      if (response.user.role == "admin") {
+          this.alertService.show(new Alert(AlertType.Success, "Logged in as admin", true));
+          this.router.navigateByUrl("dashboard");
+          return;
+        }
+
+        if (response.status == 201) {
+          this.alertService.show(new Alert(AlertType.Success, "User created and logged in successfully", true));
+          this.router.navigateByUrl("game");
+        } else {
+          this.alertService.show(new Alert(AlertType.Success, "Logged in successfully", true));
+          this.router.navigateByUrl("game");
+        }
+
         this.autoValidate = false;
-
-        this.alertService.show(new Alert(AlertType.Success, "Logged in as admin", true));
-        this.router.navigateByUrl("dashboard");
-        return;
-      }
-
-      if (response.status == 201) {
-        this.alertService.show(new Alert(AlertType.Success, "User created and logged in successfully", true));
-        this.router.navigateByUrl("game");
-      } else {
-        this.alertService.show(new Alert(AlertType.Success, "Logged in successfully", true));
-        this.router.navigateByUrl("game");
-      }
-
-      this.autoValidate = false;
+      }).catch((error) => {
+        console.error(error);
+        this.alertService.show(new Alert(AlertType.Danger, "Server error", true));
+      });
 
     } else {
       this.autoValidate = true;

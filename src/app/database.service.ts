@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { Score } from './model/score';
 import { User } from './model/user';
 
@@ -7,69 +9,49 @@ import { User } from './model/user';
 })
 export class DatabaseService {
 
-  private users: Array<User> = [];
-  private scores: Array<Score> = [];
+  private API_URL: string = "http://localhost:4201";
 
-  constructor() {
-    let users = localStorage.getItem('users');
-    let scores = localStorage.getItem('scores');
+  constructor(
+    private http: HttpClient
+  ) { }
 
-    if (users) {
-      this.users = JSON.parse(users);
-    } else {
-      this.users.push({
-        nickname: "admin",
-        username: "admin",
-        password: "123456",
-        role: "admin"
-      });
+  public getUserDetails(user: User): Promise<GetUserResponse> {
+    return new Promise<GetUserResponse>((resolve, reject) => {
 
-      localStorage.setItem('users', JSON.stringify(this.users));
-    }
+      this.http.post(this.API_URL + "/users", { user: user }, { observe: 'response' }).subscribe((response) => {
+        const status = response.status;
+        const users: any = response.body;
 
-    if (scores) {
-      this.scores = JSON.parse(scores);
-    } else {
-      localStorage.setItem('scores', JSON.stringify(this.scores));
-    }
-  }
+        resolve(new GetUserResponse(status, users));
+      }, (error) => reject(error));
 
-  public saveUsersToLocalStorage(): void {
-    if (this.users) {
-      localStorage.setItem('users', JSON.stringify(this.users));
-    }
-  }
-
-  public saveScoresToLocalStorage(): void {
-    if (this.scores) {
-      localStorage.setItem('scores', JSON.stringify(this.scores));
-    }
-  }
-
-  public getUserDetails(user: User): GetUserResponse {
-    let result = this.users.find((f: User) => {
-      return (f.username == user.username) &&
-        (f.nickname == user.nickname) &&
-        (f.password == user.password);
     });
-
-    if (result) {
-      return new GetUserResponse(200, result);
-    } else {
-      user.role = "user";
-      this.users.push(user);
-      this.saveUsersToLocalStorage();
-      return new GetUserResponse(201, user);
-    }
   }
 
-  public getScoreLists(): Array<Score> {
-    return this.scores;
+  public getScoreLists(): Promise<Array<Score>> {
+    return new Promise<Array<Score>>((resolve, reject) => {
+
+      this.http.get(this.API_URL + "/scores", { observe: 'response' }).subscribe((response) => {
+        const status = response.status;
+        const scores: any = response.body;
+
+        resolve(Object.assign(scores));
+      }, (error) => reject(error));
+
+    });
   }
 
-  public setScore(score: Score): void {
-    this.scores.push(score);
-    this.saveScoresToLocalStorage();
+  public setScore(score: Score): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+
+      this.http.post(this.API_URL + "/scores", { score: score }, { observe: 'response' }).subscribe((response) => {
+
+        const status = response.status;
+        resolve();
+
+      }, (error) => reject(error));
+
+    });
   }
 
 }

@@ -22,8 +22,7 @@ export class GameComponent implements OnInit {
 
   public imageURL: string = "assets/1.png";
 
-  private startTime: number = 0;
-  private endTime: number = 0;
+  private timer: number = 0;
 
   constructor(
     private sharedService: SharedService,
@@ -32,7 +31,9 @@ export class GameComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.startTime = Date.now();
+    setInterval(() => {
+      this.timer++;
+    }, 10);
   }
 
   async play(): Promise<void> {
@@ -53,21 +54,22 @@ export class GameComponent implements OnInit {
     this.alertService.show(new Alert(AlertType.Info, "You score " + score));
 
     if (this.gameCount == 3) {
-      this.endTime = Date.now();
-
-      let time = new Date(0, 0, 0, 0);
-      time.setMilliseconds(this.endTime - this.startTime);
 
       const user: User = this.sharedService.getCurrentUser();
-      const score: Score = new Score(user.nickname, this.totalScore, time);
+      const score: Score = new Score(user.nickname, this.totalScore, this.timer.valueOf() * 10);
 
-      this.sharedService.setScore(score);
+      this.sharedService.setScore(score).then(() => {
+        this.router.navigateByUrl("greet", {
+          state: {
+            score: score
+          }
+        });
 
-      this.router.navigateByUrl("greet", {
-        state: {
-          score: score
-        }
+      }).catch((error) => {
+        console.error(error);
+        this.alertService.show(new Alert(AlertType.Danger, "could not save score", true));
       });
+
     } else {
       this.disabled = false;
     }

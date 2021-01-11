@@ -1,9 +1,9 @@
 export class Score {
     nickname: string;
     score: number;
-    time: Date;
+    time: number;
 
-    constructor(nickname: string, score: number, time: Date) {
+    constructor(nickname: string, score: number, time: number) {
         this.nickname = nickname;
         this.score = score;
         this.time = time;
