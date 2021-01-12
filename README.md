@@ -9,7 +9,7 @@ This sample shows how to create an angular app that:
 
 ## Demo
 
-* [URL - https://https://project-e96e4.web.app/](https://project-e96e4.web.app/)
+* [URL - https://project-e96e4.web.app/](https://project-e96e4.web.app/)
 
 ## Running it
 
